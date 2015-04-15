@@ -30,10 +30,10 @@ void draw_font8_ctx(GContext *ctx, int16_t start_x, int16_t start_y, uint8_t chr
 
 void draw_font8_fast(uint8_t *screen, int16_t start_x, int16_t start_y, uint8_t chr) {
 #ifdef PBL_BW
-  start_x >>= 3;  start_y *= 20;
+  start_y = (start_y*20) + (start_x>>3);
   uint8_t *row = font8 + (chr&3) + ((chr&252)*8);
-  for(uint32_t y=0; y<32; y+=4, start_y+=20, row+=4)
-    screen[start_y + start_x] = *row;
+  for(uint32_t y=0; y<8; y++, start_y+=20, row+=4)
+    screen[start_y] = *row;
 #else // PBL_COLOR
   uint8_t *row = font8 + (chr&3) + ((chr&252)*8);
   uint8_t *addr = screen + (start_y*144) + start_x;
