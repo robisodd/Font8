@@ -28,6 +28,21 @@ void draw_font8_ctx(GContext *ctx, int16_t start_x, int16_t start_y, uint8_t chr
     }
 }
 
+void draw_font8_fast(uint8_t *screen, int16_t start_x, int16_t start_y, uint8_t chr) {
+#ifdef PBL_BW
+  start_x >>= 3;  start_y *= 20;
+  uint8_t *row = font8 + (chr&3) + ((chr&252)*8);
+  for(uint32_t y=0; y<32; y+=4, start_y+=20, row+=4)
+    screen[start_y + start_x] = *row;
+#else // PBL_COLOR
+  uint8_t *row = font8 + (chr&3) + ((chr&252)*8);
+  uint8_t *addr = screen + (start_y*144) + start_x;
+  for(uint32_t y=0; y<8; y++, row+=4, addr+=144)
+    for(uint32_t x=0; x<8; x++)
+      *(addr+x) = (*row & (128>>x)) ? GColorWhiteARGB8 : GColorBlackARGB8;
+#endif
+}
+
 void draw_font8(uint8_t *screen, int16_t start_x, int16_t start_y, uint8_t color, uint8_t chr) {
 #ifdef PBL_BW
   if(color==GColorBlack) {

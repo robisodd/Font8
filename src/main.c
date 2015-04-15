@@ -13,14 +13,16 @@ void root_layer_update(Layer *me, GContext *ctx) {
       draw_font8(screen, 25, 5, GColorCyanARGB8, '0');
       draw_font8(screen, 5, 5, GColorBlackARGB8, 'A');
       draw_font8(screen, 10,10, GColorWhiteARGB8, 'B');
+      for(uint8_t i=0; i<10; i++) draw_font8_fast(screen, 10 + i*8, 40, 48+i);
       for(uint8_t i=0; i<10; i++) draw_font8(screen, 10 + i*8, 60, GColorRedARGB8, 65+i);
-      for(uint8_t i=0; i<10; i++) draw_font8(screen, 10 + i*8, 80, GColorGreenARGB8, 48+i);
+      for(uint8_t i=0; i<10; i++) draw_font8(screen, 10 + i*8, 80, GColorRedARGB8, 48+i);
       draw_font8_text(screen, 5, 120, GColorBlackARGB8, "Hello World!\0");
     #else
       draw_font8(screen, 5, 5, GColorBlack, 'A');
       draw_font8(screen, 10, 10, GColorWhite, 'B');
-      for(uint8_t i=0; i<10; i++) draw_font8(screen, 10 + i*8, 60, GColorWhite, 48+i);
-      for(uint8_t i=0; i<10; i++) draw_font8(screen, 10 + i*8, 80, GColorBlack, 48+i);
+      for(uint8_t i=0; i<10; i++) draw_font8_fast(screen, 10 + i*8, 40, 48+i);
+      for(uint8_t i=0; i<10; i++) draw_font8(screen, 10 + i*8, 60, GColorBlack, 65+i);
+      for(uint8_t i=0; i<10; i++) draw_font8(screen, 10 + i*8, 80, GColorWhite, 48+i);
       draw_font8_text(screen, 5, 120, GColorBlack, "Hello World!\0");
     #endif
     
